@@ -51,7 +51,7 @@ class DailyTableViewCell: UITableViewCell {
     }()
     private lazy var conditionChanceLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .systemBlue
+        label.textColor = .systemCyan
         label.font = .systemFont(ofSize: .conditionChanceSize, weight: .medium)
         label.textAlignment = .center
         label.adjustsFontSizeToFitWidth = true
@@ -113,6 +113,7 @@ class DailyTableViewCell: UITableViewCell {
 }
 private extension DailyTableViewCell {
     func addSubviews() {
+        contentView.backgroundColor = .systemBlue
         conditionStack.addArrangedSubview(conditionImageView)
         conditionStack.addArrangedSubview(conditionChanceLabel)
         
@@ -120,8 +121,6 @@ private extension DailyTableViewCell {
         contentView.addSubview(conditionStack)
         contentView.addSubview(minimumTemperatureLabel)
         contentView.addSubview(maximumTemperatureLabel)
-        contentView.backgroundColor = .clear
-        contentView.createBlurEffect(with: .regular)
     }
     func setupConstraints() {
         NSLayoutConstraint.activate([
@@ -159,6 +158,7 @@ private extension DailyTableViewCell {
     }
     
     func createChanceLabel(from tuple: (rain: Int, snow: Int)) -> String? {
+        print(tuple)
         if tuple.rain > 20 && tuple.snow > 20 {
             let text = tuple.rain > tuple.snow ? "\(tuple.rain)" : "\(tuple.snow)"
             return text + " %"

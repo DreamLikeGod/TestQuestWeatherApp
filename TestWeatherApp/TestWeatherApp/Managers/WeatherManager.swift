@@ -43,14 +43,13 @@ final class WeatherManager {
     
     func sendRequest(type: WeatherAPI, with coordinates: CLLocationCoordinate2D, completion: @escaping (Result<Data, Error>) -> Void) {
         let httpString = "\(type.baseUrl)\(type.endpoint)?key=\(type.apiKey)&q=\(coordinates.latitude),\(coordinates.longitude)&lang=\(type.language)"
-        var urlString: String
+        var urlString: String = ""
         switch type {
         case .current:
             urlString = httpString
         case .forecast:
-            urlString = httpString + "&days=\(type.days)"
+            urlString = "\(httpString)&days=\(type.days)"
         }
-        
         guard let url = URL(string: urlString) else {
             completion(.failure(NetworkError.invalidUrl))
             return
@@ -61,6 +60,7 @@ final class WeatherManager {
                 completion(.failure(error))
                 return
             }
+            
             guard let data else {
                 completion(.failure(NetworkError.noData))
                 return

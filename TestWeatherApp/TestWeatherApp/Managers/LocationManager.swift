@@ -38,7 +38,6 @@ extension LocationManager: CLLocationManagerDelegate {
         self.updateHandler?(.success(locationSafe.coordinate))
     }
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        print(manager.authorizationStatus.rawValue)
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             manager.requestLocation()
